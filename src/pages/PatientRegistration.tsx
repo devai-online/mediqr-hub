@@ -16,6 +16,7 @@ const PatientRegistration = () => {
     age: '',
     gender: '',
     contact: '',
+    email: '',
     symptoms: '',
     previousDiagnosis: '',
     reports: '',
@@ -24,7 +25,7 @@ const PatientRegistration = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.age || !formData.gender || !formData.contact || !formData.symptoms) {
+    if (!formData.name || !formData.age || !formData.gender || !formData.email || !formData.symptoms) {
       toast({
         title: 'Error',
         description: 'Please fill all required fields',
@@ -37,7 +38,8 @@ const PatientRegistration = () => {
       name: formData.name,
       age: parseInt(formData.age),
       gender: formData.gender as 'male' | 'female' | 'other',
-      contact: formData.contact,
+      contact: formData.contact || 'N/A',
+      email: formData.email,
       symptoms: formData.symptoms,
       previousDiagnosis: formData.previousDiagnosis || undefined,
       reports: formData.reports || undefined,
@@ -112,13 +114,24 @@ const PatientRegistration = () => {
               </div>
 
               <div>
-                <Label htmlFor="contact">Contact Number *</Label>
+                <Label htmlFor="contact">Contact Number</Label>
                 <Input
                   id="contact"
                   type="tel"
                   value={formData.contact}
                   onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
                   placeholder="+1 234 567 8900"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="email">Email Address *</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="your.email@example.com"
                 />
               </div>
 

@@ -13,6 +13,7 @@ export interface Patient {
   age: number;
   gender: 'male' | 'female' | 'other';
   contact: string;
+  email: string;
   symptoms: string;
   previousDiagnosis?: string;
   reports?: string;
@@ -25,10 +26,47 @@ export interface MedicalRecord {
   patientId: string;
   doctorId: string;
   doctorName: string;
-  diagnosis: string;
-  testResults?: string;
-  notes?: string;
-  nextVisit?: string;
+  
+  // Vital Signs
+  bloodPressure?: string;
+  heartRate?: string;
+  respiratoryRate?: string;
+  bodyTemperature?: string;
+  oxygenSaturation?: string;
+  weight?: string;
+  height?: string;
+  bmi?: string;
+  bloodGroup?: string;
+  allergies?: string;
+  smokingAlcohol?: string;
+  pastConditions?: string;
+  currentMedications?: string;
+  
+  // Clinical Findings
+  chiefComplaint?: string;
+  symptomDuration?: string;
+  associatedSymptoms?: string;
+  onsetType?: string;
+  physicalExamination?: string;
+  provisionalDiagnosis?: string;
+  
+  // Test Results
+  bloodTests?: string;
+  urineTests?: string;
+  imaging?: string;
+  cardiac?: string;
+  otherTests?: string;
+  
+  // Diagnosis & Treatment
+  finalDiagnosis: string;
+  icdCode?: string;
+  medications?: string;
+  dietAdvice?: string;
+  procedures?: string;
+  followUpDate?: string;
+  referral?: string;
+  doctorNotes?: string;
+  
   createdAt: string;
 }
 

@@ -5,15 +5,17 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { getPatients, type Patient } from '@/lib/storage';
-import { LogOut, Users, QrCode, Clock, User } from 'lucide-react';
+import { LogOut, Users, QrCode, Clock, User, UserPlus } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { QRCodeSVG } from 'qrcode.react';
+import { ManualPatientEntry } from '@/components/ManualPatientEntry';
 
 const DoctorDashboard = () => {
   const { user, logout, isDoctor } = useAuth();
   const navigate = useNavigate();
   const [patients, setPatients] = useState<Patient[]>([]);
   const [showQR, setShowQR] = useState(false);
+  const [showManualEntry, setShowManualEntry] = useState(false);
 
   useEffect(() => {
     if (!isDoctor) {
@@ -49,6 +51,10 @@ const DoctorDashboard = () => {
             </div>
           </div>
           <div className="flex gap-2">
+            <Button onClick={() => setShowManualEntry(true)}>
+              <UserPlus className="h-4 w-4 mr-2" />
+              Add Patient
+            </Button>
             <Button variant="outline" onClick={() => setShowQR(true)}>
               <QrCode className="h-4 w-4 mr-2" />
               QR Code
@@ -140,6 +146,12 @@ const DoctorDashboard = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      <ManualPatientEntry 
+        open={showManualEntry} 
+        onOpenChange={setShowManualEntry}
+        onPatientAdded={loadPatients}
+      />
     </div>
   );
 };
