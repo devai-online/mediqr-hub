@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { addPatient } from '@/lib/storage';
 import { FileText, CheckCircle } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import devaiLogo from '@/assets/devai-logo.png';
 
 const PatientRegistration = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -69,6 +70,7 @@ const PatientRegistration = () => {
       <div className="container max-w-2xl mx-auto">
         <Card>
           <CardHeader className="text-center">
+            <img src={devaiLogo} alt="DevAI Labs" className="h-12 mx-auto mb-4" />
             <div className="flex justify-center mb-4">
               <FileText className="h-12 w-12 text-primary" />
             </div>

@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Stethoscope, ShieldCheck, QrCode } from 'lucide-react';
+import devaiLogo from '@/assets/devai-logo.png';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-secondary/20 to-accent/20">
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
+          <img src={devaiLogo} alt="DevAI Labs" className="h-16 mx-auto mb-6" />
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             MediQR Hub
           </h1>
@@ -68,6 +70,9 @@ const Index = () => {
         <div className="mt-12 text-center">
           <p className="text-sm text-muted-foreground">
             Default admin credentials: admin / admin123
+          </p>
+          <p className="text-xs text-muted-foreground mt-4">
+            Powered by DevAI Labs
           </p>
         </div>
       </div>

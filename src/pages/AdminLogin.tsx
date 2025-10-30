@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ShieldCheck } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import devaiLogo from '@/assets/devai-logo.png';
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
@@ -32,6 +33,7 @@ const AdminLogin = () => {
     <div className="min-h-screen bg-secondary/30 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
+          <img src={devaiLogo} alt="DevAI Labs" className="h-12 mx-auto mb-4" />
           <div className="flex justify-center mb-4">
             <ShieldCheck className="h-12 w-12 text-primary" />
           </div>
