@@ -9,6 +9,7 @@ import { addPatient } from '@/lib/storage';
 import { FileText, CheckCircle } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import devaiLogo from '@/assets/devai-logo.png';
+import Footer from '@/components/Footer';
 
 const PatientRegistration = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -70,12 +71,14 @@ const PatientRegistration = () => {
       <div className="container max-w-2xl mx-auto">
         <Card>
           <CardHeader className="text-center">
-            <img src={devaiLogo} alt="DevAI Labs" className="h-12 mx-auto mb-4" />
+            <img src={devaiLogo} alt="DevAI Labs" className="h-16 mx-auto mb-4" />
             <div className="flex justify-center mb-4">
               <FileText className="h-12 w-12 text-primary" />
             </div>
             <CardTitle className="text-2xl">Patient Pre-Registration</CardTitle>
-            <CardDescription>Please fill in your details before consultation</CardDescription>
+            <CardDescription>
+              Designed and Developed by DevAI Labs Computing
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -177,6 +180,7 @@ const PatientRegistration = () => {
           </CardContent>
         </Card>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -11,6 +11,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { ManualPatientEntry } from '@/components/ManualPatientEntry';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import devaiLogo from '@/assets/devai-logo.png';
+import Footer from '@/components/Footer';
 
 const DoctorDashboard = () => {
   const { user, logout, isDoctor } = useAuth();
@@ -47,7 +48,7 @@ const DoctorDashboard = () => {
       <header className="bg-card border-b border-border">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <img src={devaiLogo} alt="DevAI Labs" className="h-8" />
+            <img src={devaiLogo} alt="DevAI Labs" className="h-12" />
             <Users className="h-6 w-6 text-primary" />
             <div>
               <h1 className="text-2xl font-bold text-foreground">Doctor Dashboard</h1>
@@ -232,6 +233,8 @@ const DoctorDashboard = () => {
         onOpenChange={setShowManualEntry}
         onPatientAdded={loadPatients}
       />
+
+      <Footer />
     </div>
   );
 };

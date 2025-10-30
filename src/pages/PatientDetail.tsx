@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Checkbox } from '@/components/ui/checkbox';
 import { getPatient, updatePatientStatus, addMedicalRecord, getPatientRecords, type Patient, type MedicalRecord } from '@/lib/storage';
 import { ArrowLeft, Save, User, FileText, Activity, FlaskConical, Stethoscope, Mail, Send } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
@@ -33,8 +34,36 @@ const PatientDetail = () => {
     bloodGroup: '',
     allergies: '',
     smokingAlcohol: '',
-    pastConditions: '',
     currentMedications: '',
+    
+    // Past Medical History
+    historyDiabetes: false,
+    historyDiabetesDuration: '',
+    historyHypertension: false,
+    historyHypertensionDuration: '',
+    historyHeartDisease: false,
+    historyHeartDiseaseDuration: '',
+    historyStroke: false,
+    historyStrokeDuration: '',
+    historyCancer: false,
+    historyCancerDuration: '',
+    historyTB: false,
+    historyTBDuration: '',
+    historyAsthma: false,
+    historyAsthmaDuration: '',
+    historyBloodTransfusion: false,
+    historyBloodTransfusionDuration: '',
+    historyThyroid: false,
+    historyThyroidDuration: '',
+    pastSurgery: '',
+    
+    // GPE
+    gpePallor: false,
+    gpeIcterus: false,
+    gpeCyanosis: false,
+    gpeClubbing: false,
+    gpeEdema: false,
+    gpeLymphadenopathy: false,
     
     // Clinical Findings
     chiefComplaint: '',
@@ -42,6 +71,7 @@ const PatientDetail = () => {
     associatedSymptoms: '',
     onsetType: '',
     physicalExamination: '',
+    systemicExamination: '',
     provisionalDiagnosis: '',
     
     // Test Results
@@ -301,10 +331,14 @@ const PatientDetail = () => {
               </CardHeader>
               <CardContent>
                 <Tabs defaultValue="vitals" className="w-full">
-                  <TabsList className="grid w-full grid-cols-4">
+                  <TabsList className="grid w-full grid-cols-5">
                     <TabsTrigger value="vitals">
                       <Activity className="h-4 w-4 mr-2" />
                       Vitals
+                    </TabsTrigger>
+                    <TabsTrigger value="history">
+                      <FileText className="h-4 w-4 mr-2" />
+                      History
                     </TabsTrigger>
                     <TabsTrigger value="clinical">
                       <Stethoscope className="h-4 w-4 mr-2" />
@@ -451,16 +485,6 @@ const PatientDetail = () => {
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label htmlFor="pastConditions">Past Medical Conditions</Label>
-                          <Textarea
-                            id="pastConditions"
-                            placeholder="Diabetes, Hypertension, etc."
-                            value={formData.pastConditions}
-                            onChange={(e) => setFormData({ ...formData, pastConditions: e.target.value })}
-                            rows={2}
-                          />
-                        </div>
-                        <div className="space-y-2">
                           <Label htmlFor="currentMedications">Current Medications</Label>
                           <Textarea
                             id="currentMedications"
@@ -474,8 +498,88 @@ const PatientDetail = () => {
                     </div>
                   </TabsContent>
 
+                  {/* Past Medical History Tab */}
+                  <TabsContent value="history" className="space-y-6 mt-6">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">Past Medical History</h3>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        {[
+                          { key: 'Diabetes', stateKey: 'historyDiabetes', durationKey: 'historyDiabetesDuration' },
+                          { key: 'Hypertension', stateKey: 'historyHypertension', durationKey: 'historyHypertensionDuration' },
+                          { key: 'Heart Disease', stateKey: 'historyHeartDisease', durationKey: 'historyHeartDiseaseDuration' },
+                          { key: 'Stroke', stateKey: 'historyStroke', durationKey: 'historyStrokeDuration' },
+                          { key: 'Cancer', stateKey: 'historyCancer', durationKey: 'historyCancerDuration' },
+                          { key: 'TB', stateKey: 'historyTB', durationKey: 'historyTBDuration' },
+                          { key: 'Asthma', stateKey: 'historyAsthma', durationKey: 'historyAsthmaDuration' },
+                          { key: 'Blood Transfusion', stateKey: 'historyBloodTransfusion', durationKey: 'historyBloodTransfusionDuration' },
+                          { key: 'Thyroid', stateKey: 'historyThyroid', durationKey: 'historyThyroidDuration' },
+                        ].map((item) => (
+                          <div key={item.key} className="space-y-2 p-3 border rounded-lg">
+                            <div className="flex items-center space-x-2">
+                              <Checkbox
+                                id={item.stateKey}
+                                checked={formData[item.stateKey as keyof typeof formData] as boolean}
+                                onCheckedChange={(checked) => setFormData({ ...formData, [item.stateKey]: checked })}
+                              />
+                              <Label htmlFor={item.stateKey} className="font-medium cursor-pointer">{item.key}</Label>
+                            </div>
+                            {formData[item.stateKey as keyof typeof formData] && (
+                              <Input
+                                placeholder="Duration (e.g., 5 years, since 2015)"
+                                value={formData[item.durationKey as keyof typeof formData] as string}
+                                onChange={(e) => setFormData({ ...formData, [item.durationKey]: e.target.value })}
+                                className="ml-6"
+                              />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Separator />
+
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">Past Surgery</h3>
+                      <div className="space-y-2">
+                        <Label htmlFor="pastSurgery">Surgical History</Label>
+                        <Textarea
+                          id="pastSurgery"
+                          placeholder="List any past surgeries with dates"
+                          value={formData.pastSurgery}
+                          onChange={(e) => setFormData({ ...formData, pastSurgery: e.target.value })}
+                          rows={4}
+                        />
+                      </div>
+                    </div>
+                  </TabsContent>
+
                   {/* Clinical Findings Tab */}
                   <TabsContent value="clinical" className="space-y-6 mt-6">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">General Physical Examination (GPE)</h3>
+                      <div className="grid md:grid-cols-3 gap-4">
+                        {[
+                          { key: 'Pallor', stateKey: 'gpePallor' },
+                          { key: 'Icterus', stateKey: 'gpeIcterus' },
+                          { key: 'Cyanosis', stateKey: 'gpeCyanosis' },
+                          { key: 'Clubbing', stateKey: 'gpeClubbing' },
+                          { key: 'Edema', stateKey: 'gpeEdema' },
+                          { key: 'Lymphadenopathy', stateKey: 'gpeLymphadenopathy' },
+                        ].map((item) => (
+                          <div key={item.key} className="flex items-center space-x-2 p-3 border rounded-lg">
+                            <Checkbox
+                              id={item.stateKey}
+                              checked={formData[item.stateKey as keyof typeof formData] as boolean}
+                              onCheckedChange={(checked) => setFormData({ ...formData, [item.stateKey]: checked })}
+                            />
+                            <Label htmlFor={item.stateKey} className="font-medium cursor-pointer">{item.key}</Label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Separator />
+
                     <div>
                       <h3 className="text-lg font-semibold mb-4">Symptoms</h3>
                       <div className="space-y-4">
@@ -539,6 +643,22 @@ const PatientDetail = () => {
                           value={formData.physicalExamination}
                           onChange={(e) => setFormData({ ...formData, physicalExamination: e.target.value })}
                           rows={8}
+                        />
+                      </div>
+                    </div>
+
+                    <Separator />
+
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">Systemic Examination</h3>
+                      <div className="space-y-2">
+                        <Label htmlFor="systemicExamination">System-wise Examination</Label>
+                        <Textarea
+                          id="systemicExamination"
+                          placeholder="CVS, RS, CNS, GIT, etc."
+                          value={formData.systemicExamination}
+                          onChange={(e) => setFormData({ ...formData, systemicExamination: e.target.value })}
+                          rows={6}
                         />
                       </div>
                     </div>

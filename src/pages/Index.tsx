@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Stethoscope, ShieldCheck, QrCode } from 'lucide-react';
 import devaiLogo from '@/assets/devai-logo.png';
+import Footer from '@/components/Footer';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -71,11 +72,13 @@ const Index = () => {
           <p className="text-sm text-muted-foreground">
             Default admin credentials: admin / admin123
           </p>
-          <p className="text-xs text-muted-foreground mt-4">
-            Powered by DevAI Labs
+          <p className="text-sm text-muted-foreground mt-4">
+            Designed and Developed by DevAI Labs Computing
           </p>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };

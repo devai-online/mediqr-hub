@@ -8,6 +8,8 @@ import { Label } from '@/components/ui/label';
 import { getDoctors, addDoctor, deleteDoctor, type Doctor } from '@/lib/storage';
 import { UserPlus, Trash2, LogOut, Users } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import devaiLogo from '@/assets/devai-logo.png';
+import Footer from '@/components/Footer';
 
 const AdminDashboard = () => {
   const { user, logout, isAdmin } = useAuth();
@@ -67,7 +69,8 @@ const AdminDashboard = () => {
     <div className="min-h-screen bg-secondary/30">
       <header className="bg-card border-b border-border">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+            <img src={devaiLogo} alt="DevAI Labs" className="h-12" />
             <Users className="h-6 w-6 text-primary" />
             <h1 className="text-2xl font-bold text-foreground">Admin Dashboard</h1>
           </div>
@@ -170,6 +173,8 @@ const AdminDashboard = () => {
           </Card>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 };

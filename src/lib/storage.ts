@@ -39,8 +39,36 @@ export interface MedicalRecord {
   bloodGroup?: string;
   allergies?: string;
   smokingAlcohol?: string;
-  pastConditions?: string;
   currentMedications?: string;
+  
+  // Past Medical History
+  historyDiabetes?: boolean;
+  historyDiabetesDuration?: string;
+  historyHypertension?: boolean;
+  historyHypertensionDuration?: string;
+  historyHeartDisease?: boolean;
+  historyHeartDiseaseDuration?: string;
+  historyStroke?: boolean;
+  historyStrokeDuration?: string;
+  historyCancer?: boolean;
+  historyCancerDuration?: string;
+  historyTB?: boolean;
+  historyTBDuration?: string;
+  historyAsthma?: boolean;
+  historyAsthmaDuration?: string;
+  historyBloodTransfusion?: boolean;
+  historyBloodTransfusionDuration?: string;
+  historyThyroid?: boolean;
+  historyThyroidDuration?: string;
+  pastSurgery?: string;
+  
+  // GPE (General Physical Examination)
+  gpePallor?: boolean;
+  gpeIcterus?: boolean;
+  gpeCyanosis?: boolean;
+  gpeClubbing?: boolean;
+  gpeEdema?: boolean;
+  gpeLymphadenopathy?: boolean;
   
   // Clinical Findings
   chiefComplaint?: string;
@@ -48,6 +76,7 @@ export interface MedicalRecord {
   associatedSymptoms?: string;
   onsetType?: string;
   physicalExamination?: string;
+  systemicExamination?: string;
   provisionalDiagnosis?: string;
   
   // Test Results
