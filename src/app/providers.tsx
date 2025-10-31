@@ -1,10 +1,11 @@
 "use client";
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { initializeDefaultDoctor } from "@/lib/storage";
 
 export default function Providers({ children }: { children: ReactNode }) {
   // Create QueryClient inside component to prevent hydration issues
@@ -18,6 +19,11 @@ export default function Providers({ children }: { children: ReactNode }) {
         },
       })
   );
+
+  // Initialize default doctor account on mount
+  useEffect(() => {
+    initializeDefaultDoctor();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

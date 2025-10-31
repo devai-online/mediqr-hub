@@ -101,7 +101,32 @@ export interface MedicalRecord {
 
 // Doctors
 export const getDoctors = (): Doctor[] => {
+  if (typeof window === 'undefined') return [];
   return JSON.parse(localStorage.getItem('doctors') || '[]');
+};
+
+// Default doctor account
+const DEFAULT_DOCTOR_ID = 'default-doctor-001';
+
+// Initialize default doctor account if it doesn't exist
+export const initializeDefaultDoctor = (): void => {
+  if (typeof window === 'undefined') return;
+  
+  const doctors = getDoctors();
+  const defaultDoctorExists = doctors.some(d => d.id === DEFAULT_DOCTOR_ID || d.username === 'doctor');
+  
+  if (!defaultDoctorExists) {
+    const defaultDoctor: Doctor = {
+      id: DEFAULT_DOCTOR_ID,
+      name: 'Dr. Default Doctor',
+      username: 'doctor',
+      password: 'doctor123',
+      specialty: 'General Practitioner',
+      createdAt: new Date().toISOString(),
+    };
+    doctors.push(defaultDoctor);
+    localStorage.setItem('doctors', JSON.stringify(doctors));
+  }
 };
 
 export const addDoctor = (doctor: Omit<Doctor, 'id' | 'createdAt'>): Doctor => {
