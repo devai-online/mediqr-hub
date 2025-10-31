@@ -1,3 +1,4 @@
+"use client";
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -8,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { addPatient } from '@/lib/storage';
 import { toast } from '@/hooks/use-toast';
 import { UserPlus } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 interface ManualPatientEntryProps {
   open: boolean;
@@ -17,7 +18,7 @@ interface ManualPatientEntryProps {
 }
 
 export const ManualPatientEntry = ({ open, onOpenChange, onPatientAdded }: ManualPatientEntryProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
     age: '',
@@ -66,7 +67,7 @@ export const ManualPatientEntry = ({ open, onOpenChange, onPatientAdded }: Manua
     });
 
     // Navigate to diagnosis
-    navigate(`/doctor/patient/${patient.id}`);
+    router.push(`/doctor/patient/${patient.id}`);
   };
 
   return (
@@ -168,3 +169,5 @@ export const ManualPatientEntry = ({ open, onOpenChange, onPatientAdded }: Manua
     </Dialog>
   );
 };
+
+

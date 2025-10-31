@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface User {
@@ -80,3 +81,5 @@ export const useAuth = () => {
   }
   return context;
 };
+
+

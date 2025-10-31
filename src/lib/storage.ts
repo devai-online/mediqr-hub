@@ -172,3 +172,5 @@ export const addMedicalRecord = (record: Omit<MedicalRecord, 'id' | 'createdAt'>
   localStorage.setItem('medicalRecords', JSON.stringify(records));
   return newRecord;
 };
+
+
