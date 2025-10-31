@@ -12,6 +12,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { ManualPatientEntry } from '@/components/ManualPatientEntry';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Footer from '@/components/Footer';
+import { formatTime, formatDate } from '@/lib/utils';
 
 export default function DoctorDashboard() {
   const { user, logout, isDoctor } = useAuth();
@@ -39,7 +40,13 @@ export default function DoctorDashboard() {
 
   const waitingPatients = patients.filter(p => p.status === 'waiting');
   const completedPatients = patients.filter(p => p.status === 'completed');
-  const registrationUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/patient/register`;
+  const [registrationUrl, setRegistrationUrl] = useState('/patient/register');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setRegistrationUrl(`${window.location.origin}/patient/register`);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-secondary/30">
@@ -131,7 +138,7 @@ export default function DoctorDashboard() {
                                 </p>
                               </div>
                               <Badge variant="outline" className="mt-3">
-                                {new Date(patient.createdAt).toLocaleTimeString()}
+                                {formatTime(patient.createdAt)}
                               </Badge>
                             </div>
                           </div>
@@ -192,7 +199,7 @@ export default function DoctorDashboard() {
                                 </p>
                               </div>
                               <Badge variant="outline" className="mt-3">
-                                {new Date(patient.createdAt).toLocaleDateString()}
+                                {formatDate(patient.createdAt)}
                               </Badge>
                             </div>
                           </div>

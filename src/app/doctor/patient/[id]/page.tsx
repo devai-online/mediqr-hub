@@ -15,6 +15,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { getPatient, updatePatientStatus, addMedicalRecord, getPatientRecords, type Patient, type MedicalRecord } from '@/lib/storage';
 import { ArrowLeft, Save, User, FileText, Activity, FlaskConical, Stethoscope, Mail } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { formatDate, formatDateTime } from '@/lib/utils';
 
 export default function PatientDetail() {
   const params = useParams();
@@ -111,7 +112,7 @@ export default function PatientDetail() {
   const generateEmailBody = () => {
     if (!patient) return '';
     let body = `Dear ${patient.name},\n\n`;
-    body += `Here is your medical record from your visit on ${new Date().toLocaleDateString()}.\n\n`;
+    body += `Here is your medical record from your visit on ${formatDate(new Date().toISOString())}.\n\n`;
     body += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
     body += `PATIENT INFORMATION\n`;
     body += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
@@ -137,7 +138,7 @@ export default function PatientDetail() {
       body += `${formData.dietAdvice}\n\n`;
     }
     if (formData.followUpDate) {
-      body += `Next Follow-up: ${new Date(formData.followUpDate).toLocaleDateString()}\n\n`;
+      body += `Next Follow-up: ${formatDate(formData.followUpDate)}\n\n`;
     }
     body += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
     body += `Doctor: ${user?.name || user?.username}\n`;
@@ -155,7 +156,7 @@ export default function PatientDetail() {
       });
       return;
     }
-    const subject = encodeURIComponent(`Medical Record - ${patient.name} - ${new Date().toLocaleDateString()}`);
+    const subject = encodeURIComponent(`Medical Record - ${patient.name} - ${formatDate(new Date().toISOString())}`);
     const body = generateEmailBody();
     window.location.href = `mailto:${patient.email}?subject=${subject}&body=${body}`;
   };
@@ -260,7 +261,7 @@ export default function PatientDetail() {
                 )}
                 <div>
                   <p className="text-xs text-muted-foreground">Registration</p>
-                  <p className="text-xs">{new Date(patient.createdAt).toLocaleString()}</p>
+                  <p className="text-xs">{formatDateTime(patient.createdAt)}</p>
                 </div>
                 {records.length > 0 && (
                   <>
@@ -276,7 +277,7 @@ export default function PatientDetail() {
                             <div className="flex justify-between items-start">
                               <p className="font-medium">{record.doctorName}</p>
                               <Badge variant="outline" className="text-[10px] h-5">
-                                {new Date(record.createdAt).toLocaleDateString()}
+                                {formatDate(record.createdAt)}
                               </Badge>
                             </div>
                             <p className="text-muted-foreground">{record.finalDiagnosis}</p>
